@@ -47,32 +47,53 @@ class FlightController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Flight $flight)
     {
-        //
+        return view(
+            'livewire.minitravels.flights.show',
+            compact('flight')
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Flight $flight)
     {
-        //
+        return view(
+            'livewire.minitravels.flights.edit',
+            compact('flight')
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Flight $flight)
     {
-        //
+        $flight->update([
+            'flight_number' => $request->flight_number,
+            'origin' => $request->origin,
+            'destination' => $request->destination,
+            'departure_date' => $request->departure_date,
+            'arrival_date' => $request->arrival_date,
+            'status' => $request->status,
+        ]);
+
+        return redirect()
+            ->route('flights.show', $flight)
+            ->with('success', 'Flight updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Flight $flight)
     {
-        //
+        $flight->delete();
+
+        return redirect()
+            ->route('flights.index')
+            ->with('success', 'Flight deleted successfully.');
     }
 }

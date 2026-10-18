@@ -123,16 +123,19 @@
 
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 d-flex justify-content-end gap-2 border-top pt-3">
+
+            <a href="{{ route('flights.index') }}"
+                class="btn btn-outline-secondary">
+                <i class="bx bx-arrow-back me-1"></i>
+                Cancel
+            </a>
+
             <button type="submit" class="btn btn-primary">
-                <i class="bx bx-save"></i>
+                <i class="bx bx-save me-1"></i>
                 Save Flight
             </button>
 
-            <a href="{{ route('flights.index') }}"
-                class="btn btn-secondary">
-                Cancel
-            </a>
         </div>
         </form>
 
