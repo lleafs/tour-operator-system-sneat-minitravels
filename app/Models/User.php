@@ -70,8 +70,18 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    public function isAgency(): bool
+    public function isAgencyOwner(): bool
     {
-        return $this->role === 'agency';
+        return $this->role === 'agency_owner';
+    }
+
+    public function isAgencyManager(): bool
+    {
+        return $this->role === 'agency_manager';
+    }
+
+    public function isAgent(): bool
+    {
+        return $this->role === 'agent';
     }
 }

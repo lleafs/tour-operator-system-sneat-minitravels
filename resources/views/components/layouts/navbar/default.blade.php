@@ -53,7 +53,15 @@
                   </div>
                   <div class="flex-grow-1">
                     <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-                    <small class="text-body-secondary">{{ Auth::user()->role ?? 'User' }}</small> <!-- Display user role -->
+                    <small class="text-body-secondary">
+                      {{
+                          match(Auth::user()->role) {
+                              'admin' => 'Administrator',
+                              'agency' => 'Agent',
+                              default => 'User'
+                          }
+                      }}
+                  </small>
                   </div>
                 </div>
               </a>

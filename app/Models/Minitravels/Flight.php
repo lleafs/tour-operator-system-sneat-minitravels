@@ -5,6 +5,8 @@ namespace App\Models\Minitravels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Agency;
+
 class Flight extends Model
 {
     use HasFactory;

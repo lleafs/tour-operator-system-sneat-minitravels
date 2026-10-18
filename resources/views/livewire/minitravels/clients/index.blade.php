@@ -17,37 +17,83 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>{{ __('Name') }}</th>
-                            <th>{{ __('Email') }}</th>
-                            <th>{{ __('Phone') }}</th>
-                            <th>{{ __('Registered At') }}</th>
-                            <th>{{ __('Actions') }}</th>
+                            <th>ID</th>
+                            <th>Agency</th>
+                            <th>Client</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Nationality</th>
+                            <th>Passport</th>
+                            <th>Created</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($clients as $client)
-                            <tr>
-                                <td>{{ $client->name }}</td>
-                                <td>{{ $client->email }}</td>
-                                <td>{{ $client->phone }}</td>
-                                <td>{{ $client->created_at->format('d/m/Y') }}</td>
-                                <td>
-                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-sm btn-info">
-                                        <i class="bx bx-show"></i>
-                                    </a>
-                                    <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-warning">
-                                        <i class="bx bx-edit"></i>
-                                    </a>
-                                    <form action="{{ route('clients.destroy', $client) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                        @forelse($clients as $client)
+                        <tr>
+                            <td>{{ $client->id }}</td>
+                            <td>
+                                @if($client->agency)
+                                <span class="badge bg-label-primary">
+                                    {{ $client->agency->name }}
+                                </span>
+                                @else
+                                <span class="badge bg-label-warning">
+                                    No Agency
+                                </span>
+                                @endif
+                            </td>
+                            <td>
+                                <strong>
+                                    {{ $client->first_name }}
+                                    {{ $client->last_name }}
+                                </strong>
+                            </td>
+                            <td>
+                                {{ $client->email ?? '-' }}
+                            </td>
+                            <td>
+                                {{ $client->phone ?? '-' }}
+                            </td>
+                            <td>
+                                {{ $client->nationality ?? '-' }}
+                            </td>
+                            <td>
+                                {{ $client->passport_number ?? '-' }}
+                            </td>
+                            <td>
+                                {{ $client->created_at?->format('d/m/Y') }}
+                            </td>
+                            <td>
+                                <a href="{{ route('clients.show', $client) }}" class="btn btn-sm btn-info">
+                                    <i class="bx bx-show"></i>
+                                </a>
+                                <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-warning">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <form action="{{ route('clients.destroy', $client) }}"
+                                    method="POST"
+                                    class="d-inline">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this client?')">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                No clients found.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

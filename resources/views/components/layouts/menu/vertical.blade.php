@@ -186,19 +186,6 @@
     </li>
 
     @endif
-
-    {{-- SETTINGS --}}
-    <li class="menu-item {{ request()->is('settings/*') ? 'active open' : '' }}">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-cog"></i>
-        <div>{{ __('Settings') }}</div>
-      </a>
-
-      <ul class="menu-sub">
-
-        </a>
-    </li>
-
   </ul>
   </li>
 
