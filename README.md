@@ -38,6 +38,39 @@
   </kbd>
 </p>
 
+# MiniTravels
+
+MiniTravels is a Laravel 12-based Travel Agency and Tour Operator Management System built on top of the Sneat Bootstrap Starter Kit.
+
+The platform is designed for travel agencies and tour operators to manage clients, bookings, flights, hotels, agencies, users, and day-to-day travel operations through a modern Bootstrap 5 interface.
+
+MiniTravels supports multi-agency environments, allowing each agency to manage its own customers and reservations while platform administrators maintain visibility and control across the entire system.
+
+Current features include:
+
+- Multi-agency architecture
+- Agency and user management
+- Client management
+- Booking management
+- Flight management
+- Hotel management
+- Role-based access control
+- Tenant-aware data ownership
+- Laravel 12 + Bootstrap 5 + Livewire
+
+The project is actively evolving toward a complete travel operations platform with support for payments, vouchers, itineraries, reporting, and customer relationship management (CRM).
+
+---
+
+🔗 **Live Demo:** https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template-free/demo/
+
+---
+
+## 🚀 Introduction
+
+The **Laravel 12 Bootstrap Starter Kit** is a clean and minimal starting point for your Laravel applications. It’s designed to give developers a robust structure while saving hours of initial setup time.
+
+This kit is integrated with **Bootstrap 5**, providing a responsive, mobile-first UI out-of-the-box. Whether you're building a simple CRUD, admin panel, or a complex web app, this starter kit speeds up your workflow and keeps your code clean and maintainable.
 ## 🚀 Introduction
 
 The **Laravel 12 Bootstrap Starter Kit** is a clean and minimal starting point for your Laravel applications. It’s designed to give developers a robust structure while saving hours of initial setup time.
