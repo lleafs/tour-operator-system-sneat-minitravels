@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th>{{ __('Client') }}</th>
-                            <th>{{ __('Tour/Package') }}</th>
+
                             <th>{{ __('Date') }}</th>
                             <th>{{ __('Status') }}</th>
                             <th>{{ __('Total') }}</th>
@@ -27,32 +27,34 @@
                     </thead>
                     <tbody>
                         @foreach($bookings as $booking)
-                            <tr>
-                                <td>{{ $booking->client->name }}</td>
-                                <td>{{ $booking->tour->name ?? $booking->package->name }}</td>
-                                <td>{{ $booking->date->format('d/m/Y') }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $booking->status === 'confirmed' ? 'success' : 'secondary' }}">
-                                        {{ ucfirst($booking->status) }}
-                                    </span>
-                                </td>
-                                <td>{{ $booking->total }} {{ __('USD') }}</td>
-                                <td>
-                                    <a href="{{ route('bookings.show', $booking) }}" class="btn btn-sm btn-info">
-                                        <i class="bx bx-show"></i>
-                                    </a>
-                                    <a href="{{ route('bookings.edit', $booking) }}" class="btn btn-sm btn-warning">
-                                        <i class="bx bx-edit"></i>
-                                    </a>
-                                    <form action="{{ route('bookings.destroy', $booking) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                {{ $booking->client?->first_name }}
+                                {{ $booking->client?->last_name }}
+                            </td>
+                            <td>{{ $booking->created_at?->format('d/m/Y') }}</td>
+                            <td>
+                                <span class="badge bg-{{ $booking->status === 'confirmed' ? 'success' : 'secondary' }}">
+                                    {{ ucfirst($booking->status) }}
+                                </span>
+                            </td>
+                            <td>{{ $booking->amount }} {{ __('USD') }}</td>
+                            <td>
+                                <a href="{{ route('bookings.show', $booking) }}" class="btn btn-sm btn-info">
+                                    <i class="bx bx-show"></i>
+                                </a>
+                                <a href="{{ route('bookings.edit', $booking) }}" class="btn btn-sm btn-warning">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <form action="{{ route('bookings.destroy', $booking) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

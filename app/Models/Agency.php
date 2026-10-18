@@ -22,4 +22,11 @@ class Agency extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(
+            \App\Models\Minitravels\Booking::class
+        );
+    }
 }

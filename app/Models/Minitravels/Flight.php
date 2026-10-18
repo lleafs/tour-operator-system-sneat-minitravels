@@ -22,4 +22,8 @@ class Flight extends Model
         'arrival_date',
         'status',
     ];
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

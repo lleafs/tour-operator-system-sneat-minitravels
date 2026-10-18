@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Minitravels;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Minitravels\Booking;
+use App\Models\Minitravels\Client;
+use App\Models\Minitravels\Flight;
+use App\Models\Minitravels\hotel;
 
 class BookingController extends Controller
 {
@@ -22,7 +25,20 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        $clients = Client::orderBy('first_name')->get();
+
+        $flights = Flight::orderBy('departure_date')->get();
+
+        $hotels = Hotel::orderBy('name')->get();
+
+        return view(
+            'livewire.minitravels.bookings.create',
+            compact(
+                'clients',
+                'flights',
+                'hotels'
+            )
+        );
     }
 
     /**
@@ -30,31 +46,95 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'flight_id' => 'required|exists:flights,id',
+            'hotel_id' => 'nullable|exists:hotels,id',
+            'status' => 'required|in:pending,confirmed,completed,cancelled',
+            'amount' => 'required|numeric|min:0',
+            'notes' => 'nullable|string',
+        ]);
+
+        do {
+            $reference =
+                'BK-' .
+                now()->format('Y') .
+                '-' .
+                strtoupper(fake()->bothify('??####'));
+        } while (
+            Booking::where(
+                'booking_reference',
+                $reference
+            )->exists()
+        );
+
+        $validated['booking_reference'] = $reference;
+
+        Booking::create($validated);
+
+        return redirect()
+            ->route('bookings.index')
+            ->with(
+                'success',
+                'Booking created successfully.'
+            );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Booking $booking)
     {
-        //
+        return view(
+            'livewire.minitravels.bookings.show',
+            compact('booking')
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Booking $booking)
     {
-        //
+        $clients = Client::orderBy('first_name')->get();
+
+        $flights = Flight::orderBy('departure_date')->get();
+
+        $hotels = Hotel::orderBy('name')->get();
+
+        return view(
+            'livewire.minitravels.bookings.edit',
+            compact(
+                'booking',
+                'clients',
+                'flights',
+                'hotels'
+            )
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Booking $booking)
     {
-        //
+        $validated = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'flight_id' => 'required|exists:flights,id',
+            'hotel_id' => 'nullable|exists:hotels,id',
+            'status' => 'required|in:pending,confirmed,completed,cancelled',
+            'amount' => 'required|numeric|min:0',
+            'notes' => 'nullable|string',
+        ]);
+
+        $booking->update($validated);
+
+        return redirect()
+            ->route('bookings.index')
+            ->with(
+                'success',
+                'Booking updated successfully.'
+            );
     }
 
     /**

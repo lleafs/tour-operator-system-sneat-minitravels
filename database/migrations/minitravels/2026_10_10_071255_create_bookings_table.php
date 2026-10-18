@@ -13,6 +13,39 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('agency_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignId('client_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignId('flight_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+            $table->foreignId('hotel_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+            $table->string('booking_reference')->unique();
+
+            $table->enum('status', [
+                'pending',
+                'confirmed',
+                'cancelled',
+                'completed'
+            ])->default('pending');
+
+            $table->decimal('amount', 10, 2)
+                ->default(0);
+
+            $table->text('notes')->nullable();
+
             $table->timestamps();
         });
     }

@@ -163,6 +163,12 @@
         {{ auth()->user()->agency?->name }}
       </span>
     </li>
+    <li class="menu-item {{ request()->routeIs('clients.index') ? 'active' : '' }}">
+      <a href="{{ route('clients.index') }}" class="menu-link" wire:navigate>
+        <i class="menu-icon tf-icons bx bx-user"></i>
+        <div>Clients</div>
+      </a>
+    </li>
 
     <li class="menu-item {{ request()->routeIs('flights.index') ? 'active' : '' }}">
       <a href="{{ route('flights.index') }}" class="menu-link" wire:navigate>
@@ -177,14 +183,6 @@
         <div>Bookings</div>
       </a>
     </li>
-
-    <li class="menu-item {{ request()->routeIs('clients.index') ? 'active' : '' }}">
-      <a href="{{ route('clients.index') }}" class="menu-link" wire:navigate>
-        <i class="menu-icon tf-icons bx bx-user"></i>
-        <div>Clients</div>
-      </a>
-    </li>
-
     @endif
   </ul>
   </li>
