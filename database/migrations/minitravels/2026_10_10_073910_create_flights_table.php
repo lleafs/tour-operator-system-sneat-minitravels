@@ -13,6 +13,23 @@ return new class extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
+
+            $table->string('flight_number');
+            $table->string('origin');
+            $table->string('destination');
+
+            $table->dateTime('departure_date');
+            $table->dateTime('arrival_date');
+
+            $table->enum('status', [
+                'scheduled',
+                'boarding',
+                'airborne',
+                'delayed',
+                'landed',
+                'cancelled'
+            ])->default('scheduled');
+
             $table->timestamps();
         });
     }

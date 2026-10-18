@@ -2,9 +2,22 @@
 
 namespace App\Models\Minitravels;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Flight extends Model
 {
-    //
+    use HasFactory;
+    protected $casts = [
+        'departure_date' => 'datetime',
+        'arrival_date' => 'datetime',
+    ];
+    protected $fillable = [
+        'flight_number',
+        'origin',
+        'destination',
+        'departure_date',
+        'arrival_date',
+        'status',
+    ];
 }
