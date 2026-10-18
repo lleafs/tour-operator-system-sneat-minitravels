@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrator',
             'email' => 'admin@minitravels.test',
             'password' => Hash::make('admin123'),
+            'role'      => 'admin',
         ]);
     }
 }

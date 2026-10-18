@@ -14,35 +14,45 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>{{ __('Name') }}</th>
-                            <th>{{ __('Director') }}</th>
-                            <th>{{ __('Account') }}</th>
-                            <th>{{ __('License Date') }}</th>
-                            <th>{{ __('Commission') }}</th>
+                            <th>{{ __('Agency') }}</th>
+                            <th>{{ __('Email') }}</th>
+                            <th>{{ __('Phone') }}</th>
+                            <th>{{ __('Slug') }}</th>
+                            <th>{{ __('Users') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($agencies as $agency)
-                            <tr>
-                                <td>{{ $agency->name }}</td>
-                                <td>{{ $agency->director }}</td>
-                                <td>{{ $agency->account }}</td>
-                                <td>{{ $agency->license_date }}</td>
-                                <td>{{ $agency->commission }}%</td>
-                                <td>
-                                    <a href="{{ route('agencies.edit', $agency) }}" class="btn btn-sm btn-warning">
-                                        <i class="bx bx-edit"></i>
-                                    </a>
-                                    <form action="{{ route('agencies.destroy', $agency) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>{{ $agency->name }}</td>
+                            <td>{{ $agency->email }}</td>
+                            <td>{{ $agency->phone }}</td>
+                            <td>
+                                <span class="badge bg-label-primary">
+                                    {{ $agency->slug }}
+                                </span>
+                            </td>
+                            <td>
+                                {{ $agency->users()->count() }}
+                            </td>
+                            <td>
+                                <a href="{{ route('agencies.show', $agency) }}"
+                                    class="btn btn-sm btn-info">
+                                    <i class="bx bx-show"></i>
+                                </a>
+                                <a href="{{ route('agencies.edit', $agency) }}" class="btn btn-sm btn-warning">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <form action="{{ route('agencies.destroy', $agency) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
