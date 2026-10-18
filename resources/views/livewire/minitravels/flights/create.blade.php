@@ -55,20 +55,25 @@
 
                     {{-- Origin --}}
                     <div class="col-md-6">
-                        <label class="form-label">Origin Airport</label>
+                        <label class="form-label">Origin (IATA)</label>
+
                         <input type="text"
                             name="origin"
-                            class="form-control"
-                            placeholder="SCL - Santiago">
+                            maxlength="3"
+                            class="form-control text-uppercase"
+                            placeholder="SCL"
+                            value="{{ old('origin', $flight->origin ?? '') }}">
                     </div>
-
                     {{-- Destination --}}
                     <div class="col-md-6">
-                        <label class="form-label">Destination Airport</label>
+                        <label class="form-label">Destination (IATA)</label>
+
                         <input type="text"
                             name="destination"
-                            class="form-control"
-                            placeholder="MIA - Miami">
+                            maxlength="3"
+                            class="form-control text-uppercase"
+                            placeholder="MIA"
+                            value="{{ old('destination', $flight->destination ?? '') }}">
                     </div>
 
                     {{-- Departure --}}

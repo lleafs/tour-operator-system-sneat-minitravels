@@ -19,7 +19,32 @@
                 Back
             </a>
         </div>
+        {{-- Alerts --}}
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <h6 class="mb-2">
+            <i class="bx bx-error-circle"></i>
+            Please correct the following errors:
+        </h6>
 
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show">
+        <i class="bx bx-check-circle"></i>
+        {{ session('success') }}
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+@endif
         <div class="card-body">
 
             <form action="{{ route('flights.update', $flight) }}"
@@ -68,20 +93,27 @@
                         </select>
                     </div>
 
+                    {{-- Origin --}}
                     <div class="col-md-6">
-                        <label class="form-label">Origin</label>
+                        <label class="form-label">Origin (IATA)</label>
+
                         <input type="text"
                             name="origin"
-                            class="form-control"
-                            value="{{ old('origin', $flight->origin) }}">
+                            maxlength="3"
+                            class="form-control text-uppercase"
+                            placeholder="SCL"
+                            value="{{ old('origin', $flight->origin ?? '') }}">
                     </div>
-
+                    {{-- Destination --}}
                     <div class="col-md-6">
-                        <label class="form-label">Destination</label>
+                        <label class="form-label">Destination (IATA)</label>
+
                         <input type="text"
                             name="destination"
-                            class="form-control"
-                            value="{{ old('destination', $flight->destination) }}">
+                            maxlength="3"
+                            class="form-control text-uppercase"
+                            placeholder="MIA"
+                            value="{{ old('destination', $flight->destination ?? '') }}">
                     </div>
 
                     <div class="col-md-6">

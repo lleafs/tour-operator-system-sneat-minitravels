@@ -30,14 +30,30 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        Flight::create([
-            'flight_number' => $request->flight_number,
-            'origin' => $request->origin,
-            'destination' => $request->destination,
-            'departure_date' => $request->departure_date,
-            'arrival_date' => $request->arrival_date,
-            'status' => $request->status,
+        $data = $request->validate([
+            'flight_number' => 'required|max:20',
+
+            'origin' => [
+                'required',
+                'size:3',
+                'regex:/^[A-Za-z]{3}$/',
+            ],
+
+            'destination' => [
+                'required',
+                'size:3',
+                'regex:/^[A-Za-z]{3}$/',
+            ],
+
+            'departure_date' => 'required|date',
+            'arrival_date' => 'required|date|after:departure_date',
+            'status' => 'required',
         ]);
+
+        $data['origin'] = strtoupper($data['origin']);
+        $data['destination'] = strtoupper($data['destination']);
+
+        Flight::create($data);
 
         return redirect()
             ->route('flights.index')
@@ -71,14 +87,30 @@ class FlightController extends Controller
      */
     public function update(Request $request, Flight $flight)
     {
-        $flight->update([
-            'flight_number' => $request->flight_number,
-            'origin' => $request->origin,
-            'destination' => $request->destination,
-            'departure_date' => $request->departure_date,
-            'arrival_date' => $request->arrival_date,
-            'status' => $request->status,
+        $data = $request->validate([
+            'flight_number' => 'required|max:20',
+
+            'origin' => [
+                'required',
+                'size:3',
+                'regex:/^[A-Za-z]{3}$/',
+            ],
+
+            'destination' => [
+                'required',
+                'size:3',
+                'regex:/^[A-Za-z]{3}$/',
+            ],
+
+            'departure_date' => 'required|date',
+            'arrival_date' => 'required|date|after:departure_date',
+            'status' => 'required',
         ]);
+
+        $data['origin'] = strtoupper($data['origin']);
+        $data['destination'] = strtoupper($data['destination']);
+
+        $flight->update($data);
 
         return redirect()
             ->route('flights.show', $flight)
