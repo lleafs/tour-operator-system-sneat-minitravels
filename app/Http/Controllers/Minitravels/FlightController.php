@@ -22,7 +22,7 @@ class FlightController extends Controller
      */
     public function create()
     {
-        //
+        return view('livewire.minitravels.flights.create');
     }
 
     /**
@@ -30,7 +30,18 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Flight::create([
+            'flight_number' => $request->flight_number,
+            'origin' => $request->origin,
+            'destination' => $request->destination,
+            'departure_date' => $request->departure_date,
+            'arrival_date' => $request->arrival_date,
+            'status' => $request->status,
+        ]);
+
+        return redirect()
+            ->route('flights.index')
+            ->with('success', 'Flight created successfully.');
     }
 
     /**
