@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Minitravels;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Agency;
 use App\Models\Minitravels\Booking;
 use App\Models\Minitravels\Client;
 use App\Models\Minitravels\Flight;
-use App\Models\Minitravels\hotel;
+use App\Models\Minitravels\Hotel;
 
 class BookingController extends Controller
 {
@@ -25,6 +26,8 @@ class BookingController extends Controller
      */
     public function create()
     {
+        $agencies = Agency::orderBy('name')->get();
+
         $clients = Client::orderBy('first_name')->get();
 
         $flights = Flight::orderBy('departure_date')->get();
@@ -34,6 +37,7 @@ class BookingController extends Controller
         return view(
             'livewire.minitravels.bookings.create',
             compact(
+                'agencies',
                 'clients',
                 'flights',
                 'hotels'
@@ -54,6 +58,18 @@ class BookingController extends Controller
             'amount' => 'required|numeric|min:0',
             'notes' => 'nullable|string',
         ]);
+
+        if (auth()->user()->role === 'admin') {
+            $request->validate([
+                'agency_id' => 'required|exists:agencies,id',
+            ]);
+        }
+
+        if (auth()->user()->role === 'admin') {
+            $validated['agency_id'] = $request->agency_id;
+        } else {
+            $validated['agency_id'] = auth()->user()->agency_id;
+        }
 
         do {
             $reference =

@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->decimal('price_per_night', 10, 2)
+                ->default(0);
+            $table->unsignedTinyInteger('stars')
+                ->nullable();
+            $table->text('description')
+                ->nullable();
+            $table->text('notes')
+                ->nullable();
             $table->timestamps();
         });
     }

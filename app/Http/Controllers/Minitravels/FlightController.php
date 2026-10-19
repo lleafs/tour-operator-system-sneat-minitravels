@@ -46,11 +46,16 @@ class FlightController extends Controller
             ],
 
             'departure_date' => 'required|date',
+
             'arrival_date' => 'required|date|after:departure_date',
-            'status' => 'required',
+
+            'price' => 'required|numeric|min:0',
+
+            'status' => 'required|in:scheduled,boarding,airborne,delayed,landed,cancelled',
         ]);
 
         $data['origin'] = strtoupper($data['origin']);
+
         $data['destination'] = strtoupper($data['destination']);
 
         Flight::create($data);
@@ -103,8 +108,12 @@ class FlightController extends Controller
             ],
 
             'departure_date' => 'required|date',
+
             'arrival_date' => 'required|date|after:departure_date',
-            'status' => 'required',
+
+            'price' => 'required|numeric|min:0',
+
+            'status' => 'required|in:scheduled,boarding,airborne,delayed,landed,cancelled',
         ]);
 
         $data['origin'] = strtoupper($data['origin']);

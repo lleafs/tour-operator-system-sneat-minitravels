@@ -48,6 +48,7 @@
                                     {{ ucfirst($flight->status) }}
                                 </span>
                             </td>
+                            {{--  Actions --}}
                             <td>
                                 <a href="{{ route('flights.show', $flight) }}" class="btn btn-sm btn-info">
                                     <i class="bx bx-show"></i>

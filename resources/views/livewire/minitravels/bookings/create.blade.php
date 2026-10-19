@@ -15,6 +15,37 @@
 
                 <div class="row">
 
+                    @if(auth()->user()->role === 'admin')
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Agency
+                        </label>
+
+                        <select
+                            name="agency_id"
+                            class="form-select"
+                            required>
+
+                            <option value="">
+                                Select Agency
+                            </option>
+
+                            @foreach($agencies as $agency)
+                            <option
+                                value="{{ $agency->id }}"
+                                @selected(old('agency_id')==$agency->id)>
+
+                                {{ $agency->name }}
+
+                            </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    @endif
+
                     {{-- Client --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">
@@ -31,13 +62,13 @@
                             </option>
 
                             @foreach($clients as $client)
-                                <option
-                                    value="{{ $client->id }}">
+                            <option
+                                value="{{ $client->id }}">
 
-                                    {{ $client->first_name }}
-                                    {{ $client->last_name }}
+                                {{ $client->first_name }}
+                                {{ $client->last_name }}
 
-                                </option>
+                            </option>
                             @endforeach
 
                         </select>
@@ -45,30 +76,29 @@
 
                     {{-- Flight --}}
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Flight
-                        </label>
+                        <label class="form-label">Flight</label>
 
                         <select
                             name="flight_id"
-                            class="form-select"
-                            required>
+                            id="flight_id"
+                            class="form-select">
 
-                            <option value="">
-                                Select Flight
-                            </option>
+                            <option value="">Select Flight</option>
 
                             @foreach($flights as $flight)
-                                <option
-                                    value="{{ $flight->id }}">
+                            <option
+                                value="{{ $flight->id }}"
+                                data-price="{{ $flight->price }}">
 
-                                    {{ $flight->flight_number }}
-                                    |
-                                    {{ $flight->origin }}
-                                    →
-                                    {{ $flight->destination }}
+                                {{ $flight->flight_number }}
+                                |
+                                {{ $flight->origin }}
+                                →
+                                {{ $flight->destination }}
+                                |
+                                ${{ number_format($flight->price, 2) }}
 
-                                </option>
+                            </option>
                             @endforeach
 
                         </select>
@@ -76,25 +106,25 @@
 
                     {{-- Hotel --}}
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Hotel
-                        </label>
+                        <label class="form-label">Hotel</label>
 
                         <select
                             name="hotel_id"
+                            id="hotel_id"
                             class="form-select">
 
-                            <option value="">
-                                No Hotel
-                            </option>
+                            <option value="">No Hotel</option>
 
                             @foreach($hotels as $hotel)
-                                <option
-                                    value="{{ $hotel->id }}">
+                            <option
+                                value="{{ $hotel->id }}"
+                                data-price="{{ $hotel->price_per_night }}">
 
-                                    {{ $hotel->name }}
+                                {{ $hotel->name }}
+                                |
+                                ${{ number_format($hotel->price_per_night, 2) }}/night
 
-                                </option>
+                            </option>
                             @endforeach
 
                         </select>
@@ -139,8 +169,9 @@
                             type="number"
                             step="0.01"
                             name="amount"
+                            id="amount"
                             class="form-control"
-                            placeholder="0.00">
+                            readonly>
                     </div>
 
                     {{-- Booking Reference --}}
@@ -190,3 +221,37 @@
     </div>
 
 </x-layouts.app>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const flight = document.getElementById('flight_id');
+        const hotel = document.getElementById('hotel_id');
+        const amount = document.getElementById('amount');
+
+        function calculateAmount() {
+
+            let flightPrice = 0;
+            let hotelPrice = 0;
+
+            if (flight.selectedIndex >= 0) {
+                flightPrice = parseFloat(
+                    flight.options[flight.selectedIndex].dataset.price || 0
+                );
+            }
+
+            if (hotel.selectedIndex >= 0) {
+                hotelPrice = parseFloat(
+                    hotel.options[hotel.selectedIndex].dataset.price || 0
+                );
+            }
+
+            amount.value = (flightPrice + hotelPrice).toFixed(2);
+        }
+
+        flight.addEventListener('change', calculateAmount);
+        hotel.addEventListener('change', calculateAmount);
+
+        calculateAmount();
+    });
+</script>

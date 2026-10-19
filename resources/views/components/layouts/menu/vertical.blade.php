@@ -50,7 +50,18 @@
         Operations
       </span>
     </li>
-
+    <li class="menu-item">
+      <a href="{{ route('bookings.index') }}" class="menu-link" wire:navigate>
+        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
+        <div>Bookings</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{{ route('clients.index') }}" class="menu-link" wire:navigate>
+        <i class="menu-icon tf-icons bx bx-user"></i>
+        <div>Clients</div>
+      </a>
+    </li>
     <li class="menu-item {{ request()->routeIs('flights.*') ? 'active' : '' }}">
       <a href="{{ route('flights.index') }}" class="menu-link" wire:navigate>
         <i class="menu-icon tf-icons bx bx-paper-plane"></i>
@@ -62,20 +73,6 @@
       <a href="{{ route('hotels.index') }}" class="menu-link" wire:navigate>
         <i class="menu-icon tf-icons bx bx-building-house"></i>
         <div>Hotels</div>
-      </a>
-    </li>
-
-    <li class="menu-item">
-      <a href="{{ route('bookings.index') }}" class="menu-link" wire:navigate>
-        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-        <div>Bookings</div>
-      </a>
-    </li>
-
-    <li class="menu-item">
-      <a href="{{ route('clients.index') }}" class="menu-link" wire:navigate>
-        <i class="menu-icon tf-icons bx bx-user"></i>
-        <div>Clients</div>
       </a>
     </li>
 
@@ -169,7 +166,12 @@
         <div>Clients</div>
       </a>
     </li>
-
+    <li class="menu-item {{ request()->routeIs('hotels.index') ? 'active' : '' }}">
+      <a href="{{ route('hotels.index') }}" class="menu-link" wire:navigate>
+        <i class="menu-icon tf-icons bx bx-hotel"></i>
+        <div>Hotels</div>
+      </a>
+    </li>
     <li class="menu-item {{ request()->routeIs('flights.index') ? 'active' : '' }}">
       <a href="{{ route('flights.index') }}" class="menu-link" wire:navigate>
         <i class="menu-icon tf-icons bx bx-paper-plane"></i>

@@ -17,41 +17,77 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>{{ __('Name') }}</th>
-                            <th>{{ __('City') }}</th>
-                            <th>{{ __('Stars') }}</th>
-                            <th>{{ __('Contact') }}</th>
-                            <th>{{ __('Phone') }}</th>
-                            <th>{{ __('Email') }}</th>
-                            <th>{{ __('Actions') }}</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th>Stars</th>
+                            <th>Price / Night</th>
+                            <th>Created</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($hotels as $hotel)
-                            <tr>
-                                <td>{{ $hotel->name }}</td>
-                                <td>{{ $hotel->city }}</td>
-                                <td>{{ $hotel->stars }} ★</td>
-                                <td>{{ $hotel->contact }}</td>
-                                <td>{{ $hotel->phone }}</td>
-                                <td>{{ $hotel->email }}</td>
-                                <td>
-                                    <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-sm btn-info">
-                                        <i class="bx bx-show"></i>
-                                    </a>
-                                    <a href="{{ route('hotels.edit', $hotel) }}" class="btn btn-sm btn-warning">
-                                        <i class="bx bx-edit"></i>
-                                    </a>
-                                    <form action="{{ route('hotels.destroy', $hotel) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+
+                        @forelse($hotels as $hotel)
+
+                        <tr>
+                            <td>{{ $hotel->id }}</td>
+
+                            <td>{{ $hotel->name }}</td>
+
+                            <td>{{ $hotel->city ?? '-' }}</td>
+
+                            <td>{{ $hotel->country ?? '-' }}</td>
+
+                            <td>
+                                @if($hotel->stars)
+                                {{ $hotel->stars }} ★
+                                @else
+                                -
+                                @endif
+                            </td>
+
+                            <td>${{ number_format($hotel->price_per_night, 2) }}</td>
+
+                            <td>{{ $hotel->created_at?->format('d/m/Y') }}</td>
+
+                            {{-- Actions --}}
+                            <td>
+                                <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-sm btn-info">
+                                    <i class="bx bx-show"></i>
+                                </a>
+                                <a href="{{ route('hotels.edit', $hotel) }}" class="btn btn-sm btn-warning">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <form action="{{ route('hotels.destroy', $hotel) }}"
+                                    method="POST"
+                                    class="d-inline">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this flight?')">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+
+                        </tr>
+
+                        @empty
+
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                No hotels found.
+                            </td>
+                        </tr>
+
+                        @endforelse
+
                     </tbody>
                 </table>
             </div>

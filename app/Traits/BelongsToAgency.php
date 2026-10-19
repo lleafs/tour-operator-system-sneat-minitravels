@@ -13,6 +13,7 @@ trait BelongsToAgency
 
         static::creating(function ($model) {
 
+        //dd(Auth::user());
             $user = Auth::user();
 
             if (

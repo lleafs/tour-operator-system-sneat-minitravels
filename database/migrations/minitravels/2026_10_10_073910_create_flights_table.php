@@ -14,12 +14,23 @@ return new class extends Migration
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('agency_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
             $table->string('flight_number');
+
+            $table->string('airline')->nullable();
+
             $table->string('origin');
             $table->string('destination');
 
             $table->dateTime('departure_date');
             $table->dateTime('arrival_date');
+
+            $table->decimal('price', 10, 2)
+                ->default(0);
 
             $table->enum('status', [
                 'scheduled',
