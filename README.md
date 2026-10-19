@@ -1,3 +1,27 @@
+## MiniTravels
+
+MiniTravels is a Laravel 12-based Travel Agency and Tour Operator Management System built on top of the Sneat Bootstrap Starter Kit.
+
+The platform is designed for travel agencies and tour operators to manage clients, bookings, flights, hotels, agencies, users, and day-to-day travel operations through a modern Bootstrap 5 interface.
+
+MiniTravels supports multi-agency environments, allowing each agency to manage its own customers and reservations while platform administrators maintain visibility and control across the entire system.
+
+Current features include:
+
+- Multi-agency architecture
+- Agency and user management
+- Client management
+- Booking management
+- Flight management
+- Hotel management
+- Role-based access control
+- Tenant-aware data ownership
+- Laravel 12 + Bootstrap 5 + Livewire
+
+The project is actively evolving toward a complete travel operations platform with support for payments, vouchers, itineraries, reporting, and customer relationship management (CRM).
+
+---
+
 <p align="center">
    <a href="https://themeselection.com/item/sneat-free-bootstrap-laravel-livewire-starter-kit/" target="_blank">
       <img src="https://cdn.themeselection.com/ts-assets/sneat/logo/logo.png" alt="sneat-logo" width="60px" height="auto">
@@ -37,28 +61,6 @@
     <img src="https://github.com/user-attachments/assets/a4f2c59c-92a0-4624-a0f0-d53ee0acf7d9" alt="Laravel 12 Bootstrap Starter Kit Preview">
   </kbd>
 </p>
-
-# MiniTravels
-
-MiniTravels is a Laravel 12-based Travel Agency and Tour Operator Management System built on top of the Sneat Bootstrap Starter Kit.
-
-The platform is designed for travel agencies and tour operators to manage clients, bookings, flights, hotels, agencies, users, and day-to-day travel operations through a modern Bootstrap 5 interface.
-
-MiniTravels supports multi-agency environments, allowing each agency to manage its own customers and reservations while platform administrators maintain visibility and control across the entire system.
-
-Current features include:
-
-- Multi-agency architecture
-- Agency and user management
-- Client management
-- Booking management
-- Flight management
-- Hotel management
-- Role-based access control
-- Tenant-aware data ownership
-- Laravel 12 + Bootstrap 5 + Livewire
-
-The project is actively evolving toward a complete travel operations platform with support for payments, vouchers, itineraries, reporting, and customer relationship management (CRM).
 
 ---
 
