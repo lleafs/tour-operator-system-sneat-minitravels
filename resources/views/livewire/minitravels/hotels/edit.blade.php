@@ -146,7 +146,7 @@
 
                     <button type="submit" class="btn btn-primary">
                         <i class="bx bx-save me-1"></i>
-                        Save Hotel
+                        Update Hotel
                     </button>
 
                 </div>

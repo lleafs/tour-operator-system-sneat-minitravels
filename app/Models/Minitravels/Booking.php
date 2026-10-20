@@ -21,11 +21,14 @@ class Booking extends Model
         'hotel_nights',
         'hotel_total',
         'tour_id',
-        'tour_days',
         'status',
         'booking_reference',
         'amount',
         'notes',
+        'hotel_check_in',
+        'hotel_check_out',
+        'tour_start_date',
+        'tour_end_date',
     ];
 
     public function agency()
@@ -48,7 +51,7 @@ class Booking extends Model
         return $this->belongsTo(Hotel::class);
     }
     public function tour()
-{
-    return $this->belongsTo(Tour::class);
-}
+    {
+        return $this->belongsTo(Tour::class);
+    }
 }

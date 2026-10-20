@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Minitravels\Hotel;
 
+use App\Models\Booking;
+
 class HotelController extends Controller
 {
     /**
@@ -13,10 +15,16 @@ class HotelController extends Controller
      */
     public function index()
     {
-        $hotels = Hotel::paginate(10);
-        return response()->view('livewire.minitravels.hotels.index', compact('hotels'));
-    }
+        $hotels = Hotel::withCount('bookings')
+            ->with('bookings')
+            ->latest()
+            ->paginate(10);
 
+        return view(
+            'livewire.minitravels.hotels.index',
+            compact('hotels')
+        );
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -181,6 +181,7 @@
                                         id="price_per_night"
                                         name="price_per_night"
                                         class="form-control"
+                                        value="{{ old('price_per_night', $booking->price_per_night) }}"
                                         readonly>
                                 </div>
                             </div>
@@ -220,6 +221,7 @@
                                         id="hotel_total"
                                         name="hotel_total"
                                         class="form-control"
+                                        value="{{ old('hotel_total', $booking->hotel_total) }}"
                                         readonly>
                                 </div>
                             </div>
@@ -257,26 +259,6 @@
                                 {{ $tour->days }}D/{{ $tour->nights }}N
                             </option>
                             @endforeach
-                        </select>
-                    </div>
-                    {{-- Tour Days --}}
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">
-                            Tour Days
-                        </label>
-
-                        <select
-                            id="tour_days"
-                            name="tour_days"
-                            class="form-select">
-
-                            @for($i = 1; $i <= 30; $i++)
-                                <option value="{{ $i }}"
-                                @selected(old('tour_days', $booking->tour_days) == $i)>
-                                {{ $i }}
-                                </option>
-                                @endfor
-
                         </select>
                     </div>
 
@@ -332,6 +314,7 @@
                             name="amount"
                             id="amount"
                             class="form-control"
+                            value="{{ old('amount', $booking->amount) }}"
                             readonly>
                     </div>
 

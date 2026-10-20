@@ -22,9 +22,8 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
-            $table->integer('tour_days')->nullable();
-            $table->integer('tour_nights')->nullable();
-
+            $table->date('tour_start_date')->nullable();
+            $table->date('tour_end_date')->nullable();
             $table->foreignId('client_id')
                 ->constrained()
                 ->cascadeOnDelete();
@@ -38,6 +37,8 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
+            $table->date('hotel_check_in')->nullable();
+            $table->date('hotel_check_out')->nullable();
             $table->string('room_type')->nullable();
             $table->decimal('price_per_night', 10, 2)
                 ->default(0);

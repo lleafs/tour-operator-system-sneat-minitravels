@@ -22,7 +22,6 @@
                             <th>Country</th>
                             <th>Stars</th>
                             <th>Price / Night</th>
-                            <th>Created</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -39,8 +38,8 @@
                                 -
                                 @endif
                             </td>
-                            <td>${{ number_format($hotel->price_per_night, 2) }}</td>
-                            <td>{{ $hotel->created_at?->format('d/m/Y') }}</td>
+                            <td>${{ number_format($hotel->bookings->sum('hotel_total'), 2) }}</td>
+                            
                             {{-- Actions --}}
                             <td>
                                 <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-sm btn-info">
@@ -64,7 +63,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" class="text-center">
+                            <td colspan="7" class="text-center">
                                 No hotels found.
                             </td>
                         </tr>

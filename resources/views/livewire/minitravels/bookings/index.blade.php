@@ -38,7 +38,7 @@
                                     {{ ucfirst($booking->status) }}
                                 </span>
                             </td>
-                            <td>{{ $booking->amount }} {{ __('USD') }}</td>
+                            <td>${{ number_format($booking->amount, 2) }} {{ __('USD') }}</td>
                             <td>
                                 <a href="{{ route('bookings.show', $booking) }}" class="btn btn-sm btn-info">
                                     <i class="bx bx-show"></i>

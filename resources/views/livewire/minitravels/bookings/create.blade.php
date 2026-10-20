@@ -86,21 +86,22 @@
                             <option value="">Select Flight</option>
 
                             @foreach($flights as $flight)
-                            <option
-                                value="{{ $flight->id }}"
-                                data-price="{{ $flight->price }}">
+<option
+    value="{{ $flight->id }}"
+    data-price="{{ $flight->price }}">
 
-                                {{ $flight->flight_number }}
-                                |
-                                {{ $flight->origin }}
-                                →
-                                {{ $flight->destination }}
-                                |
-                                ${{ number_format($flight->price, 2) }}
+    {{ $flight->flight_number }}
+    |
+    {{ \Carbon\Carbon::parse($flight->departure_date)->format('d/m/Y H:i') }}
+    →
+    {{ \Carbon\Carbon::parse($flight->arrival_date)->format('d/m/Y H:i') }}
+    |
+    {{ $flight->origin }} → {{ $flight->destination }}
+    |
+    ${{ number_format($flight->price, 2) }}
 
-                            </option>
+</option>
                             @endforeach
-
                         </select>
                     </div>
 
@@ -242,25 +243,6 @@
                             @endforeach
                         </select>
                     </div>
-                    {{-- Tour Days --}}
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">
-                            Tour Days
-                        </label>
-
-                        <select
-                            id="tour_days"
-                            name="tour_days"
-                            class="form-select">
-
-                            @for($i = 1; $i <= 30; $i++)
-                                <option value="{{ $i }}">
-                                {{ $i }}
-                                </option>
-                                @endfor
-
-                        </select>
-                    </div>
 
                     {{-- Status --}}
                     <div class="col-md-6 mb-3">
@@ -342,8 +324,7 @@
         const flight = document.getElementById('flight_id');
         const hotel = document.getElementById('hotel_id');
         const tour = document.getElementById('tour_id');
-        const tourDays = document.getElementById('tour_days');
-        const tourNights = document.getElementById('tour_nights');
+
         const roomType = document.getElementById('room_type');
         const hotelNights = document.getElementById('hotel_nights');
         const pricePerNight = document.getElementById('price_per_night');
@@ -430,17 +411,7 @@
         roomType.addEventListener('change', updateHotelPrice);
 
         flight.addEventListener('change', updateTotals);
-        tour.addEventListener('change', function() {
-
-            const selected =
-                tour.options[tour.selectedIndex];
-
-            tourDays.value =
-                selected.dataset.days || 0;
-
-            tourNights.value =
-                selected.dataset.nights || 0;
-        });
+        tour.addEventListener('change', updateTotals);
         hotelNights.addEventListener('change', updateTotals);
 
         updateHotelPrice();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Minitravels;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Agency;
@@ -67,8 +68,6 @@ class BookingController extends Controller
             'hotel_nights' => 'nullable|integer|min:1',
             'hotel_total' => 'nullable|numeric|min:0',
             'tour_id' => 'nullable|exists:tours,id',
-            'tour_days' => 'nullable|integer|min:1',
-            'tour_nights' => 'nullable|integer|min:0',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
             'amount' => 'required|numeric|min:0',
             'notes' => 'nullable|string',
@@ -99,6 +98,30 @@ class BookingController extends Controller
             )->exists()
         );
 
+        $flight = Flight::findOrFail($request->flight_id);
+        $tour = Tour::findOrFail($request->tour_id);
+
+        $hotelNights = (int) $request->hotel_nights;
+        $tourDays = (int) $tour->days;
+
+        $hotelCheckIn = Carbon::parse($flight->departure_date);
+
+        $hotelCheckOut = $hotelCheckIn
+            ->copy()
+            ->addDays($hotelNights + 1);
+
+        $tourStartDate = $hotelCheckIn->copy();
+
+        $tourEndDate = $tourStartDate
+            ->copy()
+            ->addDays($tourDays - 1);
+
+        $validated['hotel_check_in'] = $hotelCheckIn->toDateString();
+        $validated['hotel_check_out'] = $hotelCheckOut->toDateString();
+
+        $validated['tour_start_date'] = $tourStartDate->toDateString();
+        $validated['tour_end_date'] = $tourEndDate->toDateString();
+
         $validated['booking_reference'] = $reference;
 
         Booking::create($validated);
@@ -116,9 +139,16 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
+        $flightTotal = $booking->flight->price ?? 0;
+        $tourTotal = $booking->tour->price ?? 0;
+
         return view(
             'livewire.minitravels.bookings.show',
-            compact('booking')
+            compact(
+                'booking',
+                'flightTotal',
+                'tourTotal'
+            )
         );
     }
 
@@ -164,8 +194,6 @@ class BookingController extends Controller
             'hotel_nights' => 'nullable|integer|min:1',
             'hotel_total' => 'nullable|numeric|min:0',
             'tour_id' => 'nullable|exists:tours,id',
-            'tour_days' => 'nullable|integer|min:1',
-            'tour_nights' => 'nullable|integer|min:0',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
             'amount' => 'required|numeric|min:0',
             'notes' => 'nullable|string',
