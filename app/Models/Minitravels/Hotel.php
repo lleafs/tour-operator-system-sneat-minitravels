@@ -10,13 +10,13 @@ class Hotel extends Model
     use BelongsToAgency;
     
     protected $fillable = [
+        'agency_id',
         'name',
         'city',
         'country',
         'address',
         'phone',
         'email',
-        'price_per_night',
         'stars',
         'description',
         'notes',

@@ -17,7 +17,6 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>City</th>
                             <th>Country</th>
@@ -28,18 +27,11 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @forelse($hotels as $hotel)
-
                         <tr>
-                            <td>{{ $hotel->id }}</td>
-
                             <td>{{ $hotel->name }}</td>
-
                             <td>{{ $hotel->city ?? '-' }}</td>
-
                             <td>{{ $hotel->country ?? '-' }}</td>
-
                             <td>
                                 @if($hotel->stars)
                                 {{ $hotel->stars }} ★
@@ -47,11 +39,8 @@
                                 -
                                 @endif
                             </td>
-
                             <td>${{ number_format($hotel->price_per_night, 2) }}</td>
-
                             <td>{{ $hotel->created_at?->format('d/m/Y') }}</td>
-
                             {{-- Actions --}}
                             <td>
                                 <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-sm btn-info">
@@ -63,29 +52,22 @@
                                 <form action="{{ route('hotels.destroy', $hotel) }}"
                                     method="POST"
                                     class="d-inline">
-
                                     @csrf
                                     @method('DELETE')
-
                                     <button type="submit"
                                         class="btn btn-sm btn-danger"
                                         onclick="return confirm('Are you sure you want to delete this flight?')">
                                         <i class="bx bx-trash"></i>
                                     </button>
-
                                 </form>
                             </td>
-
                         </tr>
-
                         @empty
-
                         <tr>
                             <td colspan="8" class="text-center">
                                 No hotels found.
                             </td>
                         </tr>
-
                         @endforelse
 
                     </tbody>

@@ -13,9 +13,21 @@ return new class extends Migration
     {
         Schema::create('tours', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('agency_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('location');
-            $table->decimal('price', 8, 2);
+            $table->string('slug')->unique();
+            $table->string('destination')->nullable();
+            $table->integer('days')->default(1);
+            $table->integer('nights')->default(0);
+            $table->decimal('daily_rate', 10, 2)->default(150);
+            $table->decimal('price', 10, 2)->nullable();
+            $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('featured_image')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_featured')->default(false);
+
             $table->timestamps();
         });
     }

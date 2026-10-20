@@ -18,6 +18,37 @@
 
                 <div class="row">
 
+                    @if(auth()->user()->role === 'admin')
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Agency
+                        </label>
+
+                        <select
+                            name="agency_id"
+                            class="form-select"
+                            required>
+
+                            <option value="">
+                                Select Agency
+                            </option>
+
+                            @foreach($agencies as $agency)
+                            <option
+                                value="{{ $agency->id }}"
+                                @selected(old('agency_id', $booking->agency_id) == $agency->id)>
+
+                                {{ $agency->name }}
+
+                            </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    @endif
+
                     {{-- Client --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">
@@ -29,17 +60,19 @@
                             class="form-select"
                             required>
 
-                            @foreach($clients as $client)
+                            <option value="">
+                                Select Client
+                            </option>
 
+                            @foreach($clients as $client)
                             <option
                                 value="{{ $client->id }}"
-                                @selected($client->id == $booking->client_id)>
+                                @selected(old('client_id', $booking->client_id) == $client->id)>
 
                                 {{ $client->first_name }}
                                 {{ $client->last_name }}
 
                             </option>
-
                             @endforeach
 
                         </select>
@@ -47,59 +80,202 @@
 
                     {{-- Flight --}}
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Flight
-                        </label>
+                        <label class="form-label">Flight</label>
 
                         <select
                             name="flight_id"
-                            class="form-select"
-                            required>
+                            id="flight_id"
+                            class="form-select">
+
+                            <option value="">Select Flight</option>
 
                             @foreach($flights as $flight)
-
                             <option
                                 value="{{ $flight->id }}"
-                                @selected($flight->id == $booking->flight_id)>
+                                data-price="{{ $flight->price }}"
+                                @selected(old('flight_id', $booking->flight_id) == $flight->id)>
 
                                 {{ $flight->flight_number }}
                                 |
                                 {{ $flight->origin }}
                                 →
                                 {{ $flight->destination }}
+                                |
+                                ${{ number_format($flight->price, 2) }}
 
                             </option>
-
                             @endforeach
 
                         </select>
                     </div>
 
-                    {{-- Hotel --}}
+                    <div class="row">
+
+                        {{-- Hotel --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Hotel</label>
+
+                            <select
+                                name="hotel_id"
+                                id="hotel_id"
+                                class="form-select">
+
+                                <option value="">
+                                    No Hotel
+                                </option>
+
+                                @foreach($hotels as $hotel)
+                                <option
+                                    value="{{ $hotel->id }}"
+                                    data-price="{{ $hotel->price_per_night }}"
+                                    @selected(old('hotel_id', $booking->hotel_id) == $hotel->id)>
+                                    {{ $hotel->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="row">
+
+                            {{-- Room Type --}}
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">
+                                    Room Type
+                                </label>
+
+                                <select
+                                    id="room_type"
+                                    name="room_type"
+                                    class="form-select">
+
+                                    <option value="">Select</option>
+                                    <option value="Single"
+                                        @selected(old('room_type', $booking->room_type) == 'Single')>
+                                        Single</option>
+                                    <option value="Double"
+                                        @selected(old('room_type', $booking->room_type) == 'Double')>
+                                        Double</option>
+                                    <option value="Triple"
+                                        @selected(old('room_type', $booking->room_type) == 'Triple')>
+                                        Triple</option>
+                                    <option value="Suite"
+                                        @selected(old('room_type', $booking->room_type) == 'Suite')>
+                                        Suite</option>
+                                    <option value="Family"
+                                        @selected(old('room_type', $booking->room_type) == 'Family')>
+                                        Family</option>
+                                </select>
+                            </div>
+
+                            {{-- Price Per Night --}}
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">
+                                    Price Per Night
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+
+                                    <input
+                                        type="number"
+                                        id="price_per_night"
+                                        name="price_per_night"
+                                        class="form-control"
+                                        readonly>
+                                </div>
+                            </div>
+
+                            {{-- Nights --}}
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">
+                                    Nights
+                                </label>
+
+                                <select
+                                    id="hotel_nights"
+                                    name="hotel_nights"
+                                    class="form-select">
+
+                                    @for($i = 1; $i <= 30; $i++)
+                                        <option value="{{ $i }}"
+                                        @selected(old('hotel_nights', $booking->hotel_nights) == $i)>
+                                        {{ $i }}
+                                        </option>
+                                        @endfor
+
+                                </select>
+                            </div>
+
+                            {{-- Hotel Total --}}
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">
+                                    Hotel Total
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+
+                                    <input
+                                        type="number"
+                                        id="hotel_total"
+                                        name="hotel_total"
+                                        class="form-control"
+                                        readonly>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {{-- Tours --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">
-                            Hotel
+                            Tour
                         </label>
 
                         <select
-                            name="hotel_id"
+                            id="tour_id"
+                            name="tour_id"
                             class="form-select">
 
                             <option value="">
-                                No Hotel
+                                Select Tour
                             </option>
-
-                            @foreach($hotels as $hotel)
-
+                            @foreach($tours as $tour)
                             <option
-                                value="{{ $hotel->id }}"
-                                @selected($hotel->id == $booking->hotel_id)>
+                                value="{{ $tour->id }}"
+                                data-price="{{ $tour->price }}"
+                                data-days="{{ $tour->days }}"
+                                data-nights="{{ $tour->nights }}"
+                                @selected(old('tour_id', $booking->tour_id) == $tour->id)>
 
-                                {{ $hotel->name }}
-
+                                {{ $tour->name }}
+                                |
+                                ${{ number_format($tour->price, 2) }}
+                                |
+                                {{ $tour->days }}D/{{ $tour->nights }}N
                             </option>
-
                             @endforeach
+                        </select>
+                    </div>
+                    {{-- Tour Days --}}
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">
+                            Tour Days
+                        </label>
+
+                        <select
+                            id="tour_days"
+                            name="tour_days"
+                            class="form-select">
+
+                            @for($i = 1; $i <= 30; $i++)
+                                <option value="{{ $i }}"
+                                @selected(old('tour_days', $booking->tour_days) == $i)>
+                                {{ $i }}
+                                </option>
+                                @endfor
 
                         </select>
                     </div>
@@ -113,28 +289,35 @@
                         <select
                             name="status"
                             class="form-select">
-
                             <option value="pending"
-                                @selected($booking->status === 'pending')>
+                                @selected(old('status', $booking->status) == 'pending')>
                                 Pending
                             </option>
-
                             <option value="confirmed"
-                                @selected($booking->status === 'confirmed')>
+                                @selected(old('status', $booking->status) == 'confirmed')>
                                 Confirmed
                             </option>
-
                             <option value="completed"
-                                @selected($booking->status === 'completed')>
+                                @selected(old('status', $booking->status) == 'completed')>
                                 Completed
                             </option>
-
                             <option value="cancelled"
-                                @selected($booking->status === 'cancelled')>
+                                @selected(old('status', $booking->status) == 'cancelled')>
                                 Cancelled
                             </option>
-
                         </select>
+                    </div>
+
+                    {{-- Booking Reference --}}
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Booking Reference
+                        </label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            value="Generated automatically"
+                            disabled>
                     </div>
 
                     {{-- Amount --}}
@@ -147,21 +330,9 @@
                             type="number"
                             step="0.01"
                             name="amount"
+                            id="amount"
                             class="form-control"
-                            value="{{ old('amount', $booking->amount) }}">
-                    </div>
-
-                    {{-- Booking Reference --}}
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Reference
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            value="{{ $booking->booking_reference }}"
-                            disabled>
+                            readonly>
                     </div>
 
                     {{-- Notes --}}
@@ -169,13 +340,12 @@
                         <label class="form-label">
                             Notes
                         </label>
-
                         <textarea
                             name="notes"
                             rows="4"
-                            class="form-control">{{ old('notes', $booking->notes) }}</textarea>
+                            class="form-control"
+                            placeholder="Special requests, traveller preferences, comments...">{{ old('notes', $booking->notes) }}</textarea>
                     </div>
-
                 </div>
 
                 <div class="mt-4 d-flex justify-content-end gap-2 border-top pt-3">

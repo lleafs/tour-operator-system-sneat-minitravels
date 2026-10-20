@@ -5,6 +5,8 @@ namespace App\Models\Minitravels;
 use App\Traits\BelongsToAgency;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Tour;
+
 class Booking extends Model
 {
     use BelongsToAgency;
@@ -14,8 +16,14 @@ class Booking extends Model
         'client_id',
         'flight_id',
         'hotel_id',
-        'booking_reference',
+        'room_type',
+        'price_per_night',
+        'hotel_nights',
+        'hotel_total',
+        'tour_id',
+        'tour_days',
         'status',
+        'booking_reference',
         'amount',
         'notes',
     ];
@@ -39,4 +47,8 @@ class Booking extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+    public function tour()
+{
+    return $this->belongsTo(Tour::class);
+}
 }

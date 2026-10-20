@@ -37,7 +37,6 @@ class HotelController extends Controller
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
-            'price_per_night' => 'required|numeric|min:0',
             'stars' => 'nullable|integer|min:1|max:5',
             'description' => 'nullable|string',
             'notes' => 'nullable|string',
@@ -84,8 +83,7 @@ class HotelController extends Controller
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
-            'price_per_night' => 'required|numeric|min:0',
-            'stars' => 'nullable|integer|min:1|max:5',
+            'stars' => 'required|integer|min:1|max:5',
             'description' => 'nullable|string',
             'notes' => 'nullable|string',
         ]);

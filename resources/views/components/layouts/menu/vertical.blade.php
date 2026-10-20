@@ -178,7 +178,12 @@
         <div>Flights</div>
       </a>
     </li>
-
+    <li class="menu-item {{ request()->routeIs('tours.*') ? 'active' : '' }}">
+      <a href="{{ route('tours.index') }}" class="menu-link" wire:navigate>
+        <i class="menu-icon tf-icons bx bx-map"></i>
+        <div>Tours</div>
+      </a>
+    </li>
     <li class="menu-item {{ request()->routeIs('bookings.index') ? 'active' : '' }}">
       <a href="{{ route('bookings.index') }}" class="menu-link" wire:navigate>
         <i class="menu-icon tf-icons bx bx-calendar-check"></i>

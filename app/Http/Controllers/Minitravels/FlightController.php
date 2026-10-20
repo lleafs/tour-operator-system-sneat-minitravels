@@ -46,11 +46,8 @@ class FlightController extends Controller
             ],
 
             'departure_date' => 'required|date',
-
             'arrival_date' => 'required|date|after:departure_date',
-
             'price' => 'required|numeric|min:0',
-
             'status' => 'required|in:scheduled,boarding,airborne,delayed,landed,cancelled',
         ]);
 
@@ -108,11 +105,8 @@ class FlightController extends Controller
             ],
 
             'departure_date' => 'required|date',
-
             'arrival_date' => 'required|date|after:departure_date',
-
             'price' => 'required|numeric|min:0',
-
             'status' => 'required|in:scheduled,boarding,airborne,delayed,landed,cancelled',
         ]);
 

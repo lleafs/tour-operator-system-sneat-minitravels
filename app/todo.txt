@@ -1,0 +1,48 @@
+{{-- TODO:
+    Extract all Tour form fields into:
+    resources/views/tours/partials/form.blade.php
+
+    Then use:
+    @include('tours.partials.form')
+
+    in both create.blade.php and edit.blade.php to avoid
+    maintaining duplicate form markup.
+
+    Create:
+        form action = tours.store
+        @csrf
+
+    Edit:
+        form action = tours.update
+        @csrf
+        @method('PUT')
+
+    Form fields should use:
+        old('field') for create
+        old('field', $tour->field) for edit
+
+        resources/views/
+├─ tours/
+│  ├─ create.blade.php
+│  ├─ edit.blade.php
+│  └─ partials/
+│     └─ form.blade.php
+│
+├─ hotels/
+│  ├─ create.blade.php
+│  ├─ edit.blade.php
+│  └─ partials/
+│     └─ form.blade.php
+│
+├─ flights/
+│  ├─ create.blade.php
+│  ├─ edit.blade.php
+│  └─ partials/
+│     └─ form.blade.php
+│
+├─ clients/
+│  ├─ create.blade.php
+│  ├─ edit.blade.php
+│  └─ partials/
+│     └─ form.blade.php
+--}}

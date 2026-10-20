@@ -97,36 +97,21 @@
                             value="{{ old('email', $hotel->email) }}"
                             placeholder="reservations@hotel.com">
                     </div>
-                    
-                    {{-- Price per Night --}}
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Price Per Night</label>
-
-                        <input
-                            type="number"
-                            step="0.01"
-                            name="price_per_night"
-                            class="form-control"
-                            value="{{ old('price_per_night', $hotel->price_per_night) }}"
-                            required>
-                    </div>
 
                     {{-- Stars --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Stars</label>
 
-                        <select
-                            name="stars"
-                            class="form-select">
-
+                        <select name="stars" class="form-select">
                             <option value="">Select</option>
 
-                            <option value="1">1 Star</option>
-                            <option value="2">2 Stars</option>
-                            <option value="3">3 Stars</option>
-                            <option value="4">4 Stars</option>
-                            <option value="5">5 Stars</option>
-
+                            @for($i = 1; $i <= 5; $i++)
+                                <option
+                                value="{{ $i }}"
+                                @selected(old('stars', $hotel->stars) == $i)>
+                                {{ $i }} {{ $i == 1 ? 'Star' : 'Stars' }}
+                                </option>
+                                @endfor
                         </select>
                     </div>
 

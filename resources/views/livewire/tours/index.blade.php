@@ -16,30 +16,41 @@
                         <tr>
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Destination') }}</th>
+                            <th>{{ __('Days') }}</th>
                             <th>{{ __('Price') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($tours as $tour)
-                            <tr>
-                                <td>{{ $tour->name }}</td>
-                                <td>{{ $tour->destination }}</td>
-                                <td>{{ $tour->price }}</td>
-                                <td>
-                                    <a href="{{ route('tours.edit', $tour) }}" class="btn btn-sm btn-warning">
-                                        <i class="bx bx-edit"></i>
-                                    </a>
-                                    <form action="{{ route('tours.destroy', $tour) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                        @forelse($tours as $tour)
+                        <tr>
+                            <td>{{ $tour->name }}</td>
+                            <td>{{ $tour->destination }}</td>
+                            <td>{{ $tour->days }}</td>
+                            <td>${{ number_format($tour->price, 2) }}</td>
+                            <td>
+                                <a href="{{ route('tours.show', $tour) }}" class="btn btn-sm btn-info">
+                                    <i class="bx bx-show"></i>
+                                </a>
+                                <a href="{{ route('tours.edit', $tour) }}" class="btn btn-sm btn-warning">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <form action="{{ route('tours.destroy', $tour) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No tours found.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

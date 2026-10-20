@@ -11,16 +11,16 @@
                 <i class="bx bx-plus"></i> {{ __('Add Flight') }}
             </a>
         </div>
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible mb-3">
-        {{ session('success') }}
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible mb-3">
+            {{ session('success') }}
 
-        <button type="button"
+            <button type="button"
                 class="btn-close"
                 data-bs-dismiss="alert">
-        </button>
-    </div>
-@endif
+            </button>
+        </div>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
@@ -32,11 +32,12 @@
                             <th>{{ __('Departure Date') }}</th>
                             <th>{{ __('Arrival Date') }}</th>
                             <th>{{ __('Status') }}</th>
+                            <th>{{ __('Price') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($flights as $flight)
+                        @forelse($flights as $flight)
                         <tr>
                             <td>{{ $flight->flight_number }}</td>
                             <td>{{ $flight->origin }}</td>
@@ -48,7 +49,8 @@
                                     {{ ucfirst($flight->status) }}
                                 </span>
                             </td>
-                            {{--  Actions --}}
+                            <td>${{ number_format($flight->price, 2) }}</td>
+                            {{-- Actions --}}
                             <td>
                                 <a href="{{ route('flights.show', $flight) }}" class="btn btn-sm btn-info">
                                     <i class="bx bx-show"></i>
@@ -68,11 +70,16 @@
                                         onclick="return confirm('Are you sure you want to delete this flight?')">
                                         <i class="bx bx-trash"></i>
                                     </button>
-
                                 </form>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                No flights found.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

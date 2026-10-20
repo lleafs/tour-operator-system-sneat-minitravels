@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Minitravels;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Agency;
+use App\Models\Tour;
 use App\Models\Minitravels\Booking;
 use App\Models\Minitravels\Client;
 use App\Models\Minitravels\Flight;
@@ -34,13 +35,20 @@ class BookingController extends Controller
 
         $hotels = Hotel::orderBy('name')->get();
 
+        $tours = auth()->user()->role === 'admin'
+            ? Tour::orderBy('name')->get()
+            : Tour::where('agency_id', auth()->user()->agency_id)
+            ->orderBy('name')
+            ->get();
+
         return view(
             'livewire.minitravels.bookings.create',
             compact(
                 'agencies',
                 'clients',
                 'flights',
-                'hotels'
+                'hotels',
+                'tours'
             )
         );
     }
@@ -54,6 +62,13 @@ class BookingController extends Controller
             'client_id' => 'required|exists:clients,id',
             'flight_id' => 'required|exists:flights,id',
             'hotel_id' => 'nullable|exists:hotels,id',
+            'room_type' => 'nullable|string',
+            'price_per_night' => 'nullable|numeric|min:0',
+            'hotel_nights' => 'nullable|integer|min:1',
+            'hotel_total' => 'nullable|numeric|min:0',
+            'tour_id' => 'nullable|exists:tours,id',
+            'tour_days' => 'nullable|integer|min:1',
+            'tour_nights' => 'nullable|integer|min:0',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
             'amount' => 'required|numeric|min:0',
             'notes' => 'nullable|string',
@@ -118,13 +133,19 @@ class BookingController extends Controller
 
         $hotels = Hotel::orderBy('name')->get();
 
+        $tours = auth()->user()->role === 'admin'
+            ? Tour::orderBy('name')->get()
+            : Tour::where('agency_id', auth()->user()->agency_id)
+            ->orderBy('name')
+            ->get();
         return view(
             'livewire.minitravels.bookings.edit',
             compact(
                 'booking',
                 'clients',
                 'flights',
-                'hotels'
+                'hotels',
+                'tours'
             )
         );
     }
@@ -138,6 +159,13 @@ class BookingController extends Controller
             'client_id' => 'required|exists:clients,id',
             'flight_id' => 'required|exists:flights,id',
             'hotel_id' => 'nullable|exists:hotels,id',
+            'room_type' => 'nullable|string',
+            'price_per_night' => 'nullable|numeric|min:0',
+            'hotel_nights' => 'nullable|integer|min:1',
+            'hotel_total' => 'nullable|numeric|min:0',
+            'tour_id' => 'nullable|exists:tours,id',
+            'tour_days' => 'nullable|integer|min:1',
+            'tour_nights' => 'nullable|integer|min:0',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
             'amount' => 'required|numeric|min:0',
             'notes' => 'nullable|string',
@@ -156,8 +184,20 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Booking $booking)
     {
-        //
+        if (auth()->user()->role !== 'admin') {
+
+            abort_if(
+                $booking->agency_id !== auth()->user()->agency_id,
+                403
+            );
+        }
+
+        $booking->delete();
+
+        return redirect()
+            ->route('bookings.index')
+            ->with('success', 'Booking deleted successfully');
     }
 }

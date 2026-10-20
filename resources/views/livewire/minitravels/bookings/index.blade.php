@@ -26,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($bookings as $booking)
+                        @forelse($bookings as $booking)
                         <tr>
                             <td>
                                 {{ $booking->client?->first_name }}
@@ -46,16 +46,25 @@
                                 <a href="{{ route('bookings.edit', $booking) }}" class="btn btn-sm btn-warning">
                                     <i class="bx bx-edit"></i>
                                 </a>
-                                <form action="{{ route('bookings.destroy', $booking) }}" method="POST" class="d-inline">
+                                <form action="{{ route('bookings.destroy', $booking) }}"
+                                    method="POST"
+                                    class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this booking?')">
                                         <i class="bx bx-trash"></i>
                                     </button>
                                 </form>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No bookings found.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -65,5 +74,4 @@
             </div>
         </div>
     </div>
-
 </x-layouts.app>

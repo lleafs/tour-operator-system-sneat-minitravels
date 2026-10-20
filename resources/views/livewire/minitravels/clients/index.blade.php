@@ -17,15 +17,15 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Agency</th>
-                            <th>Client</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Nationality</th>
-                            <th>Passport</th>
-                            <th>Created</th>
-                            <th>Actions</th>
+                            <th>{{ __('ID') }}</th>
+                            <th>{{ __('Agency') }}</th>
+                            <th>{{ __('Client') }}</th>
+                            <th>{{ __('Email') }}</th>
+                            <th>{{ __('Phone') }}</th>
+                            <th>{{ __('Nationality') }}</th>
+                            <th>{{ __('Passport') }}</th>
+                            <th>{{ __('Created') }}</th>
+                            <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,21 +49,11 @@
                                     {{ $client->last_name }}
                                 </strong>
                             </td>
-                            <td>
-                                {{ $client->email ?? '-' }}
-                            </td>
-                            <td>
-                                {{ $client->phone ?? '-' }}
-                            </td>
-                            <td>
-                                {{ $client->nationality ?? '-' }}
-                            </td>
-                            <td>
-                                {{ $client->passport_number ?? '-' }}
-                            </td>
-                            <td>
-                                {{ $client->created_at?->format('d/m/Y') }}
-                            </td>
+                            <td>{{ $client->email ?? '-' }}</td>
+                            <td>{{ $client->phone ?? '-' }}</td>
+                            <td>{{ $client->nationality ?? '-' }}</td>
+                            <td>{{ $client->passport_number ?? '-' }}</td>
+                            <td>{{ $client->created_at?->format('d/m/Y') }}</td>
                             <td>
                                 <a href="{{ route('clients.show', $client) }}" class="btn btn-sm btn-info">
                                     <i class="bx bx-show"></i>
@@ -74,22 +64,19 @@
                                 <form action="{{ route('clients.destroy', $client) }}"
                                     method="POST"
                                     class="d-inline">
-
                                     @csrf
                                     @method('DELETE')
-
                                     <button type="submit"
                                         class="btn btn-sm btn-danger"
                                         onclick="return confirm('Are you sure you want to delete this client?')">
                                         <i class="bx bx-trash"></i>
                                     </button>
-
                                 </form>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" class="text-center">
+                            <td colspan="9" class="text-center">
                                 No clients found.
                             </td>
                         </tr>
@@ -103,5 +90,4 @@
             </div>
         </div>
     </div>
-
 </x-layouts.app>

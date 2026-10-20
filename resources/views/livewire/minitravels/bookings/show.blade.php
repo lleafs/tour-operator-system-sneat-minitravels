@@ -77,6 +77,16 @@
 
                 <div class="col-md-6 mb-4">
                     <label class="form-label text-muted">
+                        Tour
+                    </label>
+
+                    <div>
+                        {{ $booking->tour?->name ?? '-' }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label text-muted">
                         Amount
                     </label>
 
